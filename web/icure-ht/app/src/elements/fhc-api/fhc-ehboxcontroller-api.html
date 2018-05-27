@@ -1,109 +1,108 @@
+<link rel="import" href="../../../bower_components/polymer/polymer.html">
+<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
 
-	<link rel="import" href="../../../bower_components/polymer/polymer.html">
-	<link rel="import" href="../../../bower_components/iron-ajax/iron-ajax.html">
+<dom-module id="fhc-ehboxcontroller-api">
+    <template>
+        <style>
+        </style>
 
-	<dom-module id="fhc-ehboxcontroller-api">
-		<template>
-    		<style>
-	    	</style>
+        <iron-ajax id="deleteMessagesUsingPOST" method="POST" headers="[[headers]]" url="/ehbox/move/from/{source}" handle-as="json"
+                   on-error="handleError" with-credentials></iron-ajax>
+        <iron-ajax id="getFullMessageUsingGET" method="GET" headers="[[headers]]" url="/ehbox/{boxId}/{messageId}" handle-as="json"
+                   on-error="handleError" with-credentials></iron-ajax>
+        <iron-ajax id="getInfosUsingGET" method="GET" headers="[[headers]]" url="/ehbox" handle-as="json"
+                   on-error="handleError" with-credentials></iron-ajax>
+        <iron-ajax id="loadMessagesUsingGET" method="GET" headers="[[headers]]" url="/ehbox/{boxId}" handle-as="json"
+                   on-error="handleError" with-credentials></iron-ajax>
+        <iron-ajax id="moveMessagesUsingPOST" method="POST" headers="[[headers]]" url="/ehbox/move/from/{source}/to/{destination}" handle-as="json"
+                   on-error="handleError" with-credentials></iron-ajax>
+        <iron-ajax id="sendMessageUsingPOST" method="POST" headers="[[headers]]" url="/ehbox" handle-as="json"
+                   on-error="handleError" with-credentials></iron-ajax>
+    </template>
+</dom-module>
 
-				<iron-ajax id="deleteMessagesUsingPOST" method="POST"  headers="[[headers]]" url="/ehbox/move/from/{source}" handle-as="json"
-									 on-error="handleError" with-credentials></iron-ajax>
-				<iron-ajax id="getFullMessageUsingGET" method="GET"  headers="[[headers]]" url="/ehbox/{boxId}/{messageId}" handle-as="json"
-									 on-error="handleError" with-credentials></iron-ajax>
-				<iron-ajax id="getInfosUsingGET" method="GET"  headers="[[headers]]" url="/ehbox" handle-as="json"
-									 on-error="handleError" with-credentials></iron-ajax>
-				<iron-ajax id="loadMessagesUsingGET" method="GET"  headers="[[headers]]" url="/ehbox/{boxId}" handle-as="json"
-									 on-error="handleError" with-credentials></iron-ajax>
-				<iron-ajax id="moveMessagesUsingPOST" method="POST"  headers="[[headers]]" url="/ehbox/move/from/{source}/to/{destination}" handle-as="json"
-									 on-error="handleError" with-credentials></iron-ajax>
-				<iron-ajax id="sendMessageUsingPOST" method="POST"  headers="[[headers]]" url="/ehbox" handle-as="json"
-									 on-error="handleError" with-credentials></iron-ajax>
-		</template>
-	</dom-module>
+<script>class FhcEhboxcontrollerApi extends Polymer.mixinBehaviors([], Polymer.Element) {
+  static get is() {
+    return "fhc-ehboxcontroller-api"
+  }
 
-	<script>class FhcEhboxcontrollerApi extends Polymer.mixinBehaviors([], Polymer.Element) {
-	static get is() {
-		return "fhc-ehboxcontroller-api";
-	}
+  static get properties() {
+    return {
+      headers: {
+        type: Object,
+        value: {"Content-Type": "application/json"}
+      },
+      host: {
+        type: String
+      }
+    }
+  }
 
-	static get properties() {
-		return {
-			headers: {
-				type: Object,
-				value: { "Content-Type": "application/json" }
-			},
-			host: {
-				type: String
-			}
-		};
-	}
+  constructor() {
+    super()
+  }
 
-	constructor() {
-		super();
-	}
+  deleteMessagesUsingPOST(keystoreId, tokenId, passPhrase, messageIds, source) {
+    var xhr = this.$.deleteMessagesUsingPOST
+    xhr.body = messageIds
 
-	deleteMessagesUsingPOST(keystoreId, tokenId, passPhrase, messageIds, source) {
-		var xhr = this.$.deleteMessagesUsingPOST;
-		xhr.body = messageIds;
+    xhr.url = this.host + "/ehbox/move/from/{source}".replace("{source}", source) + "?ts=" + new Date().getTime() + (keystoreId ? "&keystoreId=" + keystoreId : "") + (tokenId ? "&tokenId=" + tokenId : "") + (passPhrase ? "&passPhrase=" + passPhrase : "")
+    return xhr.generateRequest().completes.then(function (req) {
+      return req.response
+    })
+  }
 
-		xhr.url = this.host + "/ehbox/move/from/{source}".replace("{source}", source) + "?ts=" + new Date().getTime() + (keystoreId ? "&keystoreId=" + keystoreId : "") + (tokenId ? "&tokenId=" + tokenId : "") + (passPhrase ? "&passPhrase=" + passPhrase : "");
-		return xhr.generateRequest().completes.then(function (req) {
-			return req.response;
-		});
-	}
+  getFullMessageUsingGET(keystoreId, tokenId, passPhrase, boxId, messageId) {
+    var xhr = this.$.getFullMessageUsingGET
 
-	getFullMessageUsingGET(keystoreId, tokenId, passPhrase, boxId, messageId) {
-		var xhr = this.$.getFullMessageUsingGET;
+    xhr.url = this.host + "/ehbox/{boxId}/{messageId}".replace("{boxId}", boxId).replace("{messageId}", messageId) + "?ts=" + new Date().getTime() + (keystoreId ? "&keystoreId=" + keystoreId : "") + (tokenId ? "&tokenId=" + tokenId : "") + (passPhrase ? "&passPhrase=" + passPhrase : "")
+    return xhr.generateRequest().completes.then(function (req) {
+      return req.response
+    })
+  }
 
-		xhr.url = this.host + "/ehbox/{boxId}/{messageId}".replace("{boxId}", boxId).replace("{messageId}", messageId) + "?ts=" + new Date().getTime() + (keystoreId ? "&keystoreId=" + keystoreId : "") + (tokenId ? "&tokenId=" + tokenId : "") + (passPhrase ? "&passPhrase=" + passPhrase : "");
-		return xhr.generateRequest().completes.then(function (req) {
-			return req.response;
-		});
-	}
+  getInfosUsingGET(keystoreId, tokenId, passPhrase) {
+    var xhr = this.$.getInfosUsingGET
 
-	getInfosUsingGET(keystoreId, tokenId, passPhrase) {
-		var xhr = this.$.getInfosUsingGET;
+    xhr.url = this.host + "/ehbox" + "?ts=" + new Date().getTime() + (keystoreId ? "&keystoreId=" + keystoreId : "") + (tokenId ? "&tokenId=" + tokenId : "") + (passPhrase ? "&passPhrase=" + passPhrase : "")
+    return xhr.generateRequest().completes.then(function (req) {
+      return req.response
+    })
+  }
 
-		xhr.url = this.host + "/ehbox" + "?ts=" + new Date().getTime() + (keystoreId ? "&keystoreId=" + keystoreId : "") + (tokenId ? "&tokenId=" + tokenId : "") + (passPhrase ? "&passPhrase=" + passPhrase : "");
-		return xhr.generateRequest().completes.then(function (req) {
-			return req.response;
-		});
-	}
+  loadMessagesUsingGET(keystoreId, tokenId, passPhrase, boxId, limit) {
+    var xhr = this.$.loadMessagesUsingGET
 
-	loadMessagesUsingGET(keystoreId, tokenId, passPhrase, boxId, limit) {
-		var xhr = this.$.loadMessagesUsingGET;
+    xhr.url = this.host + "/ehbox/{boxId}".replace("{boxId}", boxId) + "?ts=" + new Date().getTime() + (keystoreId ? "&keystoreId=" + keystoreId : "") + (tokenId ? "&tokenId=" + tokenId : "") + (passPhrase ? "&passPhrase=" + passPhrase : "") + (limit ? "&limit=" + limit : "")
+    return xhr.generateRequest().completes.then(function (req) {
+      return req.response
+    })
+  }
 
-		xhr.url = this.host + "/ehbox/{boxId}".replace("{boxId}", boxId) + "?ts=" + new Date().getTime() + (keystoreId ? "&keystoreId=" + keystoreId : "") + (tokenId ? "&tokenId=" + tokenId : "") + (passPhrase ? "&passPhrase=" + passPhrase : "") + (limit ? "&limit=" + limit : "");
-		return xhr.generateRequest().completes.then(function (req) {
-			return req.response;
-		});
-	}
+  moveMessagesUsingPOST(keystoreId, tokenId, passPhrase, messageIds, source, destination) {
+    var xhr = this.$.moveMessagesUsingPOST
+    xhr.body = messageIds
 
-	moveMessagesUsingPOST(keystoreId, tokenId, passPhrase, messageIds, source, destination) {
-		var xhr = this.$.moveMessagesUsingPOST;
-		xhr.body = messageIds;
+    xhr.url = this.host + "/ehbox/move/from/{source}/to/{destination}".replace("{source}", source).replace("{destination}", destination) + "?ts=" + new Date().getTime() + (keystoreId ? "&keystoreId=" + keystoreId : "") + (tokenId ? "&tokenId=" + tokenId : "") + (passPhrase ? "&passPhrase=" + passPhrase : "")
+    return xhr.generateRequest().completes.then(function (req) {
+      return req.response
+    })
+  }
 
-		xhr.url = this.host + "/ehbox/move/from/{source}/to/{destination}".replace("{source}", source).replace("{destination}", destination) + "?ts=" + new Date().getTime() + (keystoreId ? "&keystoreId=" + keystoreId : "") + (tokenId ? "&tokenId=" + tokenId : "") + (passPhrase ? "&passPhrase=" + passPhrase : "");
-		return xhr.generateRequest().completes.then(function (req) {
-			return req.response;
-		});
-	}
+  sendMessageUsingPOST(keystoreId, tokenId, passPhrase, publicationReceipt, receptionReceipt, readReceipt) {
+    var xhr = this.$.sendMessageUsingPOST
 
-	sendMessageUsingPOST(keystoreId, tokenId, passPhrase, publicationReceipt, receptionReceipt, readReceipt) {
-		var xhr = this.$.sendMessageUsingPOST;
+    xhr.url = this.host + "/ehbox" + "?ts=" + new Date().getTime() + (keystoreId ? "&keystoreId=" + keystoreId : "") + (tokenId ? "&tokenId=" + tokenId : "") + (passPhrase ? "&passPhrase=" + passPhrase : "") + (publicationReceipt ? "&publicationReceipt=" + publicationReceipt : "") + (receptionReceipt ? "&receptionReceipt=" + receptionReceipt : "") + (readReceipt ? "&readReceipt=" + readReceipt : "")
+    return xhr.generateRequest().completes.then(function (req) {
+      return req.response
+    })
+  }
 
-		xhr.url = this.host + "/ehbox" + "?ts=" + new Date().getTime() + (keystoreId ? "&keystoreId=" + keystoreId : "") + (tokenId ? "&tokenId=" + tokenId : "") + (passPhrase ? "&passPhrase=" + passPhrase : "") + (publicationReceipt ? "&publicationReceipt=" + publicationReceipt : "") + (receptionReceipt ? "&receptionReceipt=" + receptionReceipt : "") + (readReceipt ? "&readReceipt=" + readReceipt : "");
-		return xhr.generateRequest().completes.then(function (req) {
-			return req.response;
-		});
-	}
-
-	handleError(e) {
-		if (e.detail.request.status === 401) this.fire('auth-failed');else this.fire('api-error', e);
-	}
+  handleError(e) {
+    if (e.detail.request.status === 401) this.fire('auth-failed') else this.fire('api-error', e)
+  }
 
 }
 
-customElements.define(FhcEhboxcontrollerApi.is, FhcEhboxcontrollerApi);
+customElements.define(FhcEhboxcontrollerApi.is, FhcEhboxcontrollerApi)
 </script>

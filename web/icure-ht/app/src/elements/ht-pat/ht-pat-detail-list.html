@@ -1,4 +1,3 @@
-
 <link rel="import" href="../../../bower_components/polymer/polymer.html">
 
 <link rel="import" href="../../../bower_components/vaadin-material-theme/vaadin-grid.html">
@@ -21,12 +20,12 @@
                 width: 20px;
                 padding: 2px;
             }
+
             .horizontal vaadin-date-picker {
                 height: 90px;
                 padding-bottom: 0px;
                 @apply --padding-right-left-16
             }
-
 
             .link .ICD-10 span {
                 content: '';
@@ -46,14 +45,14 @@
                 padding: 0;
             }
 
-            vaadin-grid{
-				height:calc(100% - 104px);
-				margin: 32px 32px 0;
-				box-shadow: var(--app-shadow-elevation-1);
-				border: none;
-			}
+            vaadin-grid {
+                height: calc(100% - 104px);
+                margin: 32px 32px 0;
+                box-shadow: var(--app-shadow-elevation-1);
+                border: none;
+            }
 
-            
+
         </style>
         <vaadin-grid id="dynamic-list" size="10" multi-sort="[[multiSort]]" active-item="{{activeItem}}" items="[[_services(contacts,contacts.*)]]" on-tap="click">
             <vaadin-grid-column flex-grow="2" width="80px">
@@ -74,7 +73,7 @@
                 </template>
                 <template>[[_shortDescription(item)]]</template>
             </vaadin-grid-column>
-            <vaadin-grid-column  flex-grow="2" width="80px">
+            <vaadin-grid-column flex-grow="2" width="80px">
                 <template class="header">
                     <vaadin-grid-sorter path="function{[[_author(item)]]}">[[localize('aut','Author',language)]]</vaadin-grid-sorter>
                 </template>
@@ -84,77 +83,77 @@
     </template>
     <script>
 
-class HtPatDetailList extends Polymer.TkLocalizerMixin(Polymer.mixinBehaviors([], Polymer.Element)) {
-    static get is() {
-        return 'ht-pat-detail-list';
-    }
+      class HtPatDetailList extends Polymer.TkLocalizerMixin(Polymer.mixinBehaviors([], Polymer.Element)) {
+        static get is() {
+          return 'ht-pat-detail-list'
+        }
 
-    static get properties() {
-        return {
+        static get properties() {
+          return {
             api: {
-                type: Object
+              type: Object
             },
             user: {
-                type: Object
+              type: Object
             },
             patient: {
-                type: Object,
-                value: null
+              type: Object,
+              value: null
             },
             contact: {
-                type: Object,
-                value: null
+              type: Object,
+              value: null
             },
             contacts: {
-                type: Array,
-                value: []
+              type: Array,
+              value: []
             },
             activeItem: {
-                type: Object
+              type: Object
             },
             healthElements: {
-                type: Array,
-                value: function () {
-                    return [];
-                }
+              type: Array,
+              value: function () {
+                return []
+              }
             },
             currentContact: {
-                type: Object,
-                value: null
+              type: Object,
+              value: null
             },
             lastColumnSort: {
-                type: String,
-                value: null
+              type: String,
+              value: null
             }
-        };
-    }
+          }
+        }
 
-    constructor() {
-        super();
-    }
+        constructor() {
+          super()
+        }
 
-    _isNotInCurrentContact(currentContact, contact) {
-        return currentContact === null || contact !== currentContact;
-    }
+        _isNotInCurrentContact(currentContact, contact) {
+          return currentContact === null || contact !== currentContact
+        }
 
-    _services(contacts) {
-        return _.sortBy(_.flatMap(contacts, c => c.services), ['modified']);
-    }
+        _services(contacts) {
+          return _.sortBy(_.flatMap(contacts, c => c.services), ['modified'])
+        }
 
-    _date(item) {
-        return item ? this.api.moment(item.modified).format(item > 99991231 ? 'DD/MM/YYYY HH:mm' : 'DD/MM/YYYY') : '';
-    }
+        _date(item) {
+          return item ? this.api.moment(item.modified).format(item > 99991231 ? 'DD/MM/YYYY HH:mm' : 'DD/MM/YYYY') : ''
+        }
 
-    _author(item) {
-        return this.api.getAuthor(item.author);
-    }
+        _author(item) {
+          return this.api.getAuthor(item.author)
+        }
 
-    _shortDescription(svc) {
-        return this.api.contact().shortServiceDescription(svc, this.language);
-    }
+        _shortDescription(svc) {
+          return this.api.contact().shortServiceDescription(svc, this.language)
+        }
 
-}
+      }
 
-customElements.define(HtPatDetailList.is, HtPatDetailList);
-</script>
+      customElements.define(HtPatDetailList.is, HtPatDetailList)
+    </script>
 </dom-module>

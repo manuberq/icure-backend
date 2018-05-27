@@ -18,50 +18,50 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <script src="../bower_components/base64-js/base64js.min.js"></script>
 
 <dom-module id="ht-hcp">
-  <template>
-    <style include="shared-styles">
-      :host {
-        display: block;
-				height: calc(100% - 20px);
-				padding: 10px;
-			}
-    </style>
+    <template>
+        <style include="shared-styles">
+            :host {
+                display: block;
+                height: calc(100% - 20px);
+                padding: 10px;
+            }
+        </style>
 
-		<template is="dom-if" if="{{selectedHcp}}">
-			<ht-hcp-detail api="[[api]]" user="[[user]]" hcp="{{selectedHcp}}"></ht-hcp-detail>
-		</template>
-		<template is="dom-if" if="{{!selectedHcp}}">
-			<ht-hcp-list api="[[api]]" user="[[user]]" selected-hcp="{{selectedHcp}}"></ht-hcp-list>
-		</template>
-  </template>
+        <template is="dom-if" if="{{selectedHcp}}">
+            <ht-hcp-detail api="[[api]]" user="[[user]]" hcp="{{selectedHcp}}"></ht-hcp-detail>
+        </template>
+        <template is="dom-if" if="{{!selectedHcp}}">
+            <ht-hcp-list api="[[api]]" user="[[user]]" selected-hcp="{{selectedHcp}}"></ht-hcp-list>
+        </template>
+    </template>
 
-  <script>
-class HtHcp extends Polymer.TkLocalizerMixin(Polymer.mixinBehaviors([], Polymer.Element)) {
-	static get is() {
-		return 'ht-hcp';
-	}
+    <script>
+      class HtHcp extends Polymer.TkLocalizerMixin(Polymer.mixinBehaviors([], Polymer.Element)) {
+        static get is() {
+          return 'ht-hcp'
+        }
 
-	static get properties() {
-		return {
-			api: {
-				type: Object
-			},
-			user: {
-				type: Object
-			},
-			selectedHcp: {
-				type: Object,
-				value: null
-			}
-		};
-	}
+        static get properties() {
+          return {
+            api: {
+              type: Object
+            },
+            user: {
+              type: Object
+            },
+            selectedHcp: {
+              type: Object,
+              value: null
+            }
+          }
+        }
 
-	constructor() {
-		super();
-	}
+        constructor() {
+          super()
+        }
 
-}
+      }
 
-customElements.define(HtHcp.is, HtHcp);
-</script>
+      customElements.define(HtHcp.is, HtHcp)
+    </script>
 </dom-module>
