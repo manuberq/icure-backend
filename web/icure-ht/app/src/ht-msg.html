@@ -263,23 +263,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
 
     <script type="module">
-      import './shared-styles.js'
+        import './shared-styles.js'
 
-      class HtMsg extends Polymer.mixinBehaviors([], Polymer.Element) {
-        static get is() {
-          return 'ht-msg'
+        class HtMsg extends Polymer.mixinBehaviors([], Polymer.Element) {
+            static get is() {
+                return 'ht-msg'
+            }
+
+            static get properties() {
+                return {}
+            }
+
+            constructor() {
+                super()
+            }
+
         }
 
-        static get properties() {
-          return {}
-        }
-
-        constructor() {
-          super()
-        }
-
-      }
-
-      customElements.define(HtMsg.is, HtMsg)
+        customElements.define(HtMsg.is, HtMsg)
     </script>
 </dom-module>
