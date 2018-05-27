@@ -1,17 +1,18 @@
 /**
-@license
-Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
-*/
-import '../filter-panel/filter-panel.js';
+ @license
+ Copyright (c) 2016 The Polymer Project Authors. All rights reserved.
+ This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+ The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+ The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+ Code distributed by Google as part of the polymer project is also
+ subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+ */
+import '../filter-panel/filter-panel.js'
 
-import '../collapse-button/collapse-button.js';
-import './ht-hcp-admin-card.js';
-import '../icons/icure-icons.js';
+import '../collapse-button/collapse-button.js'
+import './ht-hcp-admin-card.js'
+import '../icons/icure-icons.js'
+
 class HtHcpDetail extends Polymer.mixinBehaviors([], Polymer.Element) {
   static get template() {
     return Polymer.html`
@@ -248,7 +249,7 @@ class HtHcpDetail extends Polymer.mixinBehaviors([], Polymer.Element) {
                 <ht-hcp-admin-card class="second-third-panel" id="pat-admin-card" api="[[api]]" user="[[user]]" hcp="[[hcp]]"></ht-hcp-admin-card>
             </template>
         </div>
-`;
+`
   }
 
   static get is() {

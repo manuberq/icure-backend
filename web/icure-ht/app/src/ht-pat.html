@@ -48,73 +48,74 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </template>
 
     <script type="module">
-import './elements/icc-api/icc-api.js';
-import './elements/ht-pat/ht-pat-list.js';
-import './elements/ht-pat/ht-pat-detail.js';
-import './shared-styles.js';
-class HtPat extends Polymer.mixinBehaviors([], Polymer.Element) {
-      static get is() {
-        return 'ht-pat'
-      }
+      import './elements/icc-api/icc-api.js'
+      import './elements/ht-pat/ht-pat-list.js'
+      import './elements/ht-pat/ht-pat-detail.js'
+      import './shared-styles.js'
 
-      static get properties() {
-        return {
-          api: {
-            type: Object
-          },
-          user: {
-            type: Object
-          },
-          route: {
-            type: Object,
-            notify: true
-          },
-          routeData: {
-            type: Object,
-            value: {}
-          },
-          selectedPatient: {
-            type: Object,
-            value: null,
-            observer: '_patientChanged'
+      class HtPat extends Polymer.mixinBehaviors([], Polymer.Element) {
+        static get is() {
+          return 'ht-pat'
+        }
+
+        static get properties() {
+          return {
+            api: {
+              type: Object
+            },
+            user: {
+              type: Object
+            },
+            route: {
+              type: Object,
+              notify: true
+            },
+            routeData: {
+              type: Object,
+              value: {}
+            },
+            selectedPatient: {
+              type: Object,
+              value: null,
+              observer: '_patientChanged'
+            }
           }
         }
-      }
 
-      static get observers() {
-        return ['_routeChanged(routeData,routeData.*)']
-      }
-
-      constructor() {
-        super()
-      }
-
-      ready() {
-        super.ready()
-      }
-
-      _patientChanged() {
-        if (this.selectedPatient === null) {
-          if (this.routeData && this.routeData.selectedPatientId) {
-            this.set('routeData.selectedPatientId', '')
-          }
-        } else if (this.selectedPatient.id !== this.routeData.selectedPatientId) {
-          this.set('routeData.selectedPatientId', this.selectedPatient.id)
+        static get observers() {
+          return ['_routeChanged(routeData,routeData.*)']
         }
-      }
 
-      _routeChanged() {
-        if (!this.routeData || !this.routeData.selectedPatientId || this.routeData.selectedPatientId.length === 0) {
-          if (this.selectedPatient) {
-            this.set('selectedPatient', null)
-          }
-        } else if (!this.selectedPatient || this.selectedPatient.id !== this.routeData.selectedPatientId) {
-          this.api.patient().getPatient(this.routeData.selectedPatientId).then(p => this.set('selectedPatient', p))
+        constructor() {
+          super()
         }
+
+        ready() {
+          super.ready()
+        }
+
+        _patientChanged() {
+          if (this.selectedPatient === null) {
+            if (this.routeData && this.routeData.selectedPatientId) {
+              this.set('routeData.selectedPatientId', '')
+            }
+          } else if (this.selectedPatient.id !== this.routeData.selectedPatientId) {
+            this.set('routeData.selectedPatientId', this.selectedPatient.id)
+          }
+        }
+
+        _routeChanged() {
+          if (!this.routeData || !this.routeData.selectedPatientId || this.routeData.selectedPatientId.length === 0) {
+            if (this.selectedPatient) {
+              this.set('selectedPatient', null)
+            }
+          } else if (!this.selectedPatient || this.selectedPatient.id !== this.routeData.selectedPatientId) {
+            this.api.patient().getPatient(this.routeData.selectedPatientId).then(p => this.set('selectedPatient', p))
+          }
+        }
+
       }
 
-    }
-
-customElements.define(HtPat.is, HtPat)
-</script>
+      customElements.define(HtPat.is, HtPat)
+    </script>
 </dom-module>
