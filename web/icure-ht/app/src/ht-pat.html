@@ -11,12 +11,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/polymer/polymer.html">
 <link rel="import" href="../bower_components/app-route/app-route.html">
 
-<link rel="import" href="elements/icc-api/icc-api.html">
+<script type="module" src="./elements/icc-api/icc-api.js"></script>
 
-<link rel="import" href="elements/ht-pat/ht-pat-list.html">
-<link rel="import" href="elements/ht-pat/ht-pat-detail.html">
+<script type="module" src="./elements/ht-pat/ht-pat-list.js"></script>
+<script type="module" src="./elements/ht-pat/ht-pat-detail.js"></script>
 
-<link rel="import" href="./shared-styles.html">
+<script type="module" src="./shared-styles.js"></script>
 
 <script src="../bower_components/moment/moment.js"></script>
 <script src="../bower_components/base64-js/base64js.min.js"></script>
@@ -47,7 +47,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     </template>
 
-    <script>class HtPat extends Polymer.mixinBehaviors([], Polymer.Element) {
+    <script type="module">
+import './elements/icc-api/icc-api.js';
+import './elements/ht-pat/ht-pat-list.js';
+import './elements/ht-pat/ht-pat-detail.js';
+import './shared-styles.js';
+class HtPat extends Polymer.mixinBehaviors([], Polymer.Element) {
       static get is() {
         return 'ht-pat'
       }
@@ -110,6 +115,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     }
 
-    customElements.define(HtPat.is, HtPat)
-    </script>
+customElements.define(HtPat.is, HtPat)
+</script>
 </dom-module>

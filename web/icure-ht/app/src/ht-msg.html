@@ -16,7 +16,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../bower_components/vaadin-material-theme/vaadin-grid.html">
 <link rel="import" href="../bower_components/vaadin-grid/vaadin-grid.html">
 <!--<link rel="import" href="./elements/collapse-button/collapse-button.html">-->
-<link rel="import" href="./shared-styles.html">
+<script type="module" src="./shared-styles.js"></script>
 
 <dom-module id="ht-msg">
     <template>
@@ -262,7 +262,9 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     </div>
     </template>
 
-    <script>class HtMsg extends Polymer.mixinBehaviors([], Polymer.Element) {
+    <script type="module">
+import './shared-styles.js';
+class HtMsg extends Polymer.mixinBehaviors([], Polymer.Element) {
       static get is() {
         return 'ht-msg'
       }
@@ -277,6 +279,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     }
 
-    customElements.define(HtMsg.is, HtMsg)
-    </script>
+customElements.define(HtMsg.is, HtMsg)
+</script>
 </dom-module>

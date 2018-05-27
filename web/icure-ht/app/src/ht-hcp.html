@@ -9,10 +9,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 -->
 
 <link rel="import" href="../bower_components/polymer/polymer.html">
-<link rel="import" href="./shared-styles.html">
+<script type="module" src="./shared-styles.js"></script>
 
-<link rel="import" href="elements/ht-hcp/ht-hcp-list.html">
-<link rel="import" href="elements/ht-hcp/ht-hcp-detail.html">
+<script type="module" src="./elements/ht-hcp/ht-hcp-list.js"></script>
+<script type="module" src="./elements/ht-hcp/ht-hcp-detail.js"></script>
 
 <script src="../bower_components/moment/moment.js"></script>
 <script src="../bower_components/base64-js/base64js.min.js"></script>
@@ -35,33 +35,36 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         </template>
     </template>
 
-    <script>
-      class HtHcp extends Polymer.TkLocalizerMixin(Polymer.mixinBehaviors([], Polymer.Element)) {
-        static get is() {
-          return 'ht-hcp'
-        }
+    <script type="module">
+import './shared-styles.js';
+import './elements/ht-hcp/ht-hcp-list.js';
+import './elements/ht-hcp/ht-hcp-detail.js';
+class HtHcp extends Polymer.TkLocalizerMixin(Polymer.mixinBehaviors([], Polymer.Element)) {
+  static get is() {
+    return 'ht-hcp'
+  }
 
-        static get properties() {
-          return {
-            api: {
-              type: Object
-            },
-            user: {
-              type: Object
-            },
-            selectedHcp: {
-              type: Object,
-              value: null
-            }
-          }
-        }
-
-        constructor() {
-          super()
-        }
-
+  static get properties() {
+    return {
+      api: {
+        type: Object
+      },
+      user: {
+        type: Object
+      },
+      selectedHcp: {
+        type: Object,
+        value: null
       }
+    }
+  }
 
-      customElements.define(HtHcp.is, HtHcp)
-    </script>
+  constructor() {
+    super()
+  }
+
+}
+
+customElements.define(HtHcp.is, HtHcp)
+</script>
 </dom-module>
